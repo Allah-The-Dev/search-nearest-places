@@ -1,6 +1,8 @@
 package types
 
 import (
+	"search-nearest-places/httpclient"
+
 	"github.com/graphql-go/graphql"
 )
 
@@ -15,11 +17,12 @@ var placesType = graphql.NewObject(
 	},
 )
 
-var QueryType = graphql.NewObject(
+//RootQueryType ... root query
+var RootQueryType = graphql.NewObject(
 	graphql.ObjectConfig{
 		Name: "Query",
 		Fields: graphql.Fields{
-			"places-around": &graphql.Field{
+			"nearbyplaces": &graphql.Field{
 				Type:        placesType,
 				Description: "Get near by places",
 				Args: graphql.FieldConfigArgument{
@@ -30,12 +33,12 @@ var QueryType = graphql.NewObject(
 				Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 					locationName, ok := p.Args["location"].(string)
 					if ok {
-						coordinates, err := httpclient.getLocationCoordinates(locationName)
+						coordinates, err := httpclient.GetLocationCoordinates(locationName)
 						if err != nil {
 							return nil, err
 						}
 
-						return getPlacesAroundGivenLocaton(coordinates)
+						return httpclient.GetPlacesAroundGivenLocaton(coordinates)
 					}
 					return nil, nil
 				},

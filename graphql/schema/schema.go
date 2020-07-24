@@ -9,6 +9,6 @@ import (
 //Schema ... GraphQL root schema
 var Schema, _ = graphql.NewSchema(
 	graphql.SchemaConfig{
-		Query: types.QueryType,
+		Query: types.RootQueryType,
 	},
 )
