@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/graphql-go/graphql"
@@ -12,8 +13,13 @@ import (
 	"search-nearest-places/graphql/schema"
 )
 
+// Tweak configuration values here.
 const (
-	serverPort = ":9080"
+	httpServerPort    = ":9080"
+	readHeaderTimeout = 1 * time.Second
+	writeTimeout      = 10 * time.Second
+	idleTimeout       = 90 * time.Second
+	maxHeaderBytes    = http.DefaultMaxHeaderBytes
 )
 
 func doGraphQL(w http.ResponseWriter, r *http.Request) {
@@ -45,7 +51,16 @@ func main() {
 	subRouter := router.PathPrefix("/api/v1").Subrouter()
 	subRouter.HandleFunc("/graphql", doGraphQL).Methods(http.MethodPost)
 
-	log.Printf("**************http server listening on port %s *************", serverPort)
-	log.Fatal(http.ListenAndServe(serverPort, router))
+	// Configure the HTTP server.
+	httpServer := &http.Server{
+		Addr:              httpServerPort,
+		Handler:           router,
+		ReadHeaderTimeout: readHeaderTimeout,
+		WriteTimeout:      writeTimeout,
+		IdleTimeout:       idleTimeout,
+		MaxHeaderBytes:    maxHeaderBytes,
+	}
+	log.Printf("**************http server listening on port %s *************", httpServerPort)
+	log.Fatal(httpServer.ListenAndServe())
 
 }
