@@ -3,6 +3,7 @@ package httpclient
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"sync"
 
 	"search-nearest-places/models"
@@ -55,7 +56,7 @@ func GetLocationCoordinates(locationName string) (models.LocationCoordinate, err
 		return locationCoordinate, err
 	}
 
-	fmt.Println("here geo code response", hereGeoCodeRes)
+	log.Println("here geo code response received")
 
 	return hereGeoCodeRes.Items[0].Position, nil
 }
