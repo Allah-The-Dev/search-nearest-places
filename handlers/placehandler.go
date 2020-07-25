@@ -3,7 +3,9 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"net/url"
 	"search-nearest-places/cache"
 	"search-nearest-places/httpclient"
 	"search-nearest-places/models"
@@ -22,35 +24,30 @@ func PlacesHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	location := query.Get("location")
-	fmt.Println("location name is ", location)
+	log.Printf("location name is %s", location)
 
-	if isAvailableInCache, poiData := checkPOIDataInCache(location); isAvailableInCache {
+	urlEncodedLocation, err := getURLEncodedLocation(location)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	log.Printf("url encoded location is %s", urlEncodedLocation)
+
+	if ok, poiData := checkPOIDataInCache(urlEncodedLocation); ok {
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(poiData)
 		return
 	}
 
-	locationCoordinates, err := httpclient.GetLocationCoordinates(location)
+	poiPlaces, err := getPOIFromHereAPI(urlEncodedLocation)
 	if err != nil {
-		fieldName := err.Error()
-		msg := fmt.Sprintf("unable to get location coordinate %s", fieldName)
-		http.Error(w, msg, http.StatusInternalServerError)
-		return
-	}
-
-	places, err := httpclient.GetPOINearALocation(locationCoordinates)
-	if err != nil {
-		fieldName := err.Error()
-		msg := fmt.Sprintf("unable to get places %s", fieldName)
-		http.Error(w, msg, http.StatusInternalServerError)
-		return
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
 	//update the cache
-	poiDataCache.Put(location, *places)
+	poiDataCache.Put(location, *poiPlaces)
 
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(*places)
+	json.NewEncoder(w).Encode(*poiPlaces)
 }
 
 func checkPOIDataInCache(location string) (bool, *models.Places) {
@@ -59,4 +56,31 @@ func checkPOIDataInCache(location string) (bool, *models.Places) {
 		return true, poiData
 	}
 	return false, nil
+}
+
+func getURLEncodedLocation(location string) (string, error) {
+	u, err := url.Parse(location)
+	if err != nil {
+		fieldName := err.Error()
+		errFmt := fmt.Errorf("url encoding error for %s; %s", location, fieldName)
+		return "", errFmt
+	}
+	return u.EscapedPath(), nil
+}
+
+func getPOIFromHereAPI(location string) (*models.Places, error) {
+	locationCoordinates, err := httpclient.GetLocationCoordinates(location)
+	if err != nil {
+		fieldName := err.Error()
+		errFmt := fmt.Errorf("unable to get location coordinate %s", fieldName)
+		return nil, errFmt
+	}
+
+	places, err := httpclient.GetPOINearALocation(locationCoordinates)
+	if err != nil {
+		fieldName := err.Error()
+		errFmt := fmt.Errorf("unable to get places %s", fieldName)
+		return nil, errFmt
+	}
+	return places, nil
 }
