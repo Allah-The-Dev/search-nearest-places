@@ -43,11 +43,11 @@ func (cache *LRUCache) Get(location string) *models.Places {
 
 //Put ... put item in list and map to a hashmap if not exist
 //if exist move it to front
-func (cache *LRUCache) Put(location string, poiPlaces models.Places) {
+func (cache *LRUCache) Put(location string, newPOIPlaces models.Places) {
 
 	if node, ok := cache.elementMap[location]; ok {
 
-		node.Value.(*list.Element).Value = poiPlaces
+		node.Value.(*list.Element).Value = PlaceInfoCache{location, newPOIPlaces}
 
 		cache.list.MoveToFront(node)
 	} else {
@@ -64,7 +64,7 @@ func (cache *LRUCache) Put(location string, poiPlaces models.Places) {
 		newNode := &list.Element{
 			Value: PlaceInfoCache{
 				Location: location,
-				POIData:  poiPlaces,
+				POIData:  newPOIPlaces,
 			},
 		}
 
