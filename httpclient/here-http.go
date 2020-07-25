@@ -46,7 +46,7 @@ func GetPlacesAroundGivenLocaton(coordinates models.LocationCoordinate) (*models
 	placesAround := &models.Places{}
 	var err error
 
-	placesAround.Restaurent, err = getNearByRestaurents(coordinates, hereRestaurentCatID)
+	placesAround.Restaurent, err = getNearByPlaceForACategory(coordinates, hereRestaurentCatID)
 	if err != nil {
 		fmt.Println("i'm here", err)
 		return nil, err
@@ -54,9 +54,9 @@ func GetPlacesAroundGivenLocaton(coordinates models.LocationCoordinate) (*models
 	return placesAround, nil
 }
 
-func getNearByRestaurents(coordinates models.LocationCoordinate, categoryID string) ([]models.Restaurent, error) {
+func getNearByPlaceForACategory(coordinates models.LocationCoordinate, categoryID string) ([]models.PlaceInfo, error) {
 
-	restaurentItems := models.RestaurentItems{}
+	placeInfoItems := models.PlaceInfoItems{}
 
 	coordinatesStr := fmt.Sprintf("%f,%f", coordinates.Lat, coordinates.Lng)
 
@@ -64,12 +64,12 @@ func getNearByRestaurents(coordinates models.LocationCoordinate, categoryID stri
 
 	responseBody, err := doHTTPGet(url)
 	if err != nil {
-		return []models.Restaurent{}, err
+		return []models.PlaceInfo{}, err
 	}
 	defer responseBody.Close()
-	json.NewDecoder(responseBody).Decode(&restaurentItems)
+	json.NewDecoder(responseBody).Decode(&placeInfoItems)
 
-	fmt.Println("restaurent is ", restaurentItems)
-	return restaurentItems.Items, nil
+	fmt.Println("restaurent is ", placeInfoItems)
+	return placeInfoItems.Items, nil
 
 }
