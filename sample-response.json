@@ -1,0 +1,519 @@
+{
+  "restaurents": [
+    {
+      "title": "Aadava",
+      "id": "here:pds:place:2768lxx5-f5e49398b7090789d0cb9cc5075be8e5",
+      "resultType": "place",
+      "address": {
+        "label": "Aadava, Ebertstraße, 10117 Berlin, Deutschland",
+        "countryCode": "DEU",
+        "countryName": "Deutschland",
+        "state": "Berlin",
+        "county": "Berlin",
+        "city": "Berlin",
+        "district": "Mitte",
+        "street": "Ebertstraße",
+        "postalCode": "10117",
+        "houseNumber": ""
+      },
+      "position": {
+        "lat": 52.51603,
+        "lng": 13.37694
+      },
+      "access": [
+        {
+          "lat": 52.51603,
+          "lng": 13.37694
+        }
+      ],
+      "distance": 2,
+      "categories": [
+        {
+          "id": "100-1000-0000",
+          "name": "Restaurant",
+          "primary": true
+        }
+      ],
+      "references": [
+        {
+          "supplier": {
+            "id": "yelp"
+          },
+          "id": "cl0Er-9Nh4aVZvQEYMKkdA"
+        }
+      ],
+      "foodTypes": null,
+      "contacts": null,
+      "openingHours": null
+    },
+    {
+      "title": "Grillwalker",
+      "id": "here:pds:place:276u33db-ab6651cf86c04bd08f12df34005e91ac",
+      "resultType": "place",
+      "address": {
+        "label": "Grillwalker, Ebertstraße, 10117 Berlin, Deutschland",
+        "countryCode": "DEU",
+        "countryName": "Deutschland",
+        "state": "Berlin",
+        "county": "Berlin",
+        "city": "Berlin",
+        "district": "Mitte",
+        "street": "Ebertstraße",
+        "postalCode": "10117",
+        "houseNumber": ""
+      },
+      "position": {
+        "lat": 52.51602,
+        "lng": 13.37694
+      },
+      "access": [
+        {
+          "lat": 52.51602,
+          "lng": 13.37694
+        }
+      ],
+      "distance": 3,
+      "categories": [
+        {
+          "id": "100-1000-0009",
+          "name": "Fastfood",
+          "primary": true
+        },
+        {
+          "id": "100-1000-0004",
+          "name": "Markthalle/-stand",
+          "primary": false
+        }
+      ],
+      "references": [
+        {
+          "supplier": {
+            "id": "yelp"
+          },
+          "id": "Lm3sfaprh_pjfjeA_cz8UA"
+        }
+      ],
+      "foodTypes": [
+        {
+          "id": "800-059",
+          "name": "Hotdogs",
+          "primary": true
+        }
+      ],
+      "contacts": [
+        {
+          "phone": [
+            {
+              "value": "+4949304277161"
+            }
+          ],
+          "www": null
+        }
+      ],
+      "openingHours": null
+    },
+    {
+      "title": "Die Ess-Bahn",
+      "id": "here:pds:place:276u33db-377496066b324c069c4f190e17dd8063",
+      "resultType": "place",
+      "address": {
+        "label": "Die Ess-Bahn, Ebertstraße, 10117 Berlin, Deutschland",
+        "countryCode": "DEU",
+        "countryName": "Deutschland",
+        "state": "Berlin",
+        "county": "Berlin",
+        "city": "Berlin",
+        "district": "Mitte",
+        "street": "Ebertstraße",
+        "postalCode": "10117",
+        "houseNumber": ""
+      },
+      "position": {
+        "lat": 52.51602,
+        "lng": 13.37694
+      },
+      "access": [
+        {
+          "lat": 52.51602,
+          "lng": 13.37694
+        }
+      ],
+      "distance": 3,
+      "categories": [
+        {
+          "id": "100-1000-0000",
+          "name": "Restaurant",
+          "primary": true
+        }
+      ],
+      "references": [
+        {
+          "supplier": {
+            "id": "yelp"
+          },
+          "id": "jAJNtQu9qxb1sKY4htoejQ"
+        }
+      ],
+      "foodTypes": [
+        {
+          "id": "302-000",
+          "name": "Deutsch",
+          "primary": true
+        }
+      ],
+      "contacts": [
+        {
+          "phone": [
+            {
+              "value": "+493084370441"
+            }
+          ],
+          "www": null
+        }
+      ],
+      "openingHours": [
+        {
+          "text": [
+            "Mon-Sun: 08:00 - 24:00"
+          ],
+          "isOpen": true,
+          "structured": [
+            {
+              "start": "T080000",
+              "duration": "PT16H00M",
+              "recurrence": "FREQ:DAILY;BYDAY:MO,TU,WE,TH,FR,SA,SU"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "evChargingStations": [
+    {
+      "title": "Electric Vehicle Charging Station",
+      "id": "here:pds:place:276u33db-dfaa9b113b9143578202814d13327640",
+      "resultType": "place",
+      "address": {
+        "label": "Electric Vehicle Charging Station, Unter den Linden 77, 10117 Berlin, Deutschland",
+        "countryCode": "DEU",
+        "countryName": "Deutschland",
+        "state": "Berlin",
+        "county": "Berlin",
+        "city": "Berlin",
+        "district": "Mitte",
+        "street": "Unter den Linden",
+        "postalCode": "10117",
+        "houseNumber": "77"
+      },
+      "position": {
+        "lat": 52.51612,
+        "lng": 13.38003
+      },
+      "access": [
+        {
+          "lat": 52.51631,
+          "lng": 13.37999
+        }
+      ],
+      "distance": 211,
+      "categories": [
+        {
+          "id": "700-7600-0322",
+          "name": "Ladestation für Elektrofahrzeuge",
+          "primary": true
+        }
+      ],
+      "references": null,
+      "foodTypes": null,
+      "contacts": null,
+      "openingHours": null
+    },
+    {
+      "title": "Unter den Linden 77",
+      "id": "here:pds:place:276if4l9-678fef5324d90651b4846b61bbf5f233",
+      "resultType": "place",
+      "address": {
+        "label": "Unter den Linden 77, Unter den Linden 77, 10117 Berlin, Deutschland",
+        "countryCode": "DEU",
+        "countryName": "Deutschland",
+        "state": "Berlin",
+        "county": "Berlin",
+        "city": "Berlin",
+        "district": "Mitte",
+        "street": "Unter den Linden",
+        "postalCode": "10117",
+        "houseNumber": "77"
+      },
+      "position": {
+        "lat": 52.51612,
+        "lng": 13.38003
+      },
+      "access": [
+        {
+          "lat": 52.51631,
+          "lng": 13.37999
+        }
+      ],
+      "distance": 211,
+      "categories": [
+        {
+          "id": "700-7600-0322",
+          "name": "Ladestation für Elektrofahrzeuge",
+          "primary": true
+        }
+      ],
+      "references": null,
+      "foodTypes": null,
+      "contacts": null,
+      "openingHours": [
+        {
+          "text": [
+            "Mon-Sun: 00:00 - 23:59"
+          ],
+          "isOpen": true,
+          "structured": [
+            {
+              "start": "T000000",
+              "duration": "PT23H59M",
+              "recurrence": "FREQ:DAILY;BYDAY:MO,TU,WE,TH,FR,SA,SU"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Apcoa Parking Deutschland",
+      "id": "here:pds:place:276u33db-9733d0fd242a44469b077ec4e66f42ff",
+      "resultType": "place",
+      "address": {
+        "label": "Apcoa Parking Deutschland, Unter den Linden, 10117 Berlin, Deutschland",
+        "countryCode": "DEU",
+        "countryName": "Deutschland",
+        "state": "Berlin",
+        "county": "Berlin",
+        "city": "Berlin",
+        "district": "Mitte",
+        "street": "Unter den Linden",
+        "postalCode": "10117",
+        "houseNumber": ""
+      },
+      "position": {
+        "lat": 52.51602,
+        "lng": 13.38024
+      },
+      "access": [
+        {
+          "lat": 52.51633,
+          "lng": 13.38022
+        }
+      ],
+      "distance": 225,
+      "categories": [
+        {
+          "id": "700-7600-0322",
+          "name": "Ladestation für Elektrofahrzeuge",
+          "primary": true
+        }
+      ],
+      "references": null,
+      "foodTypes": null,
+      "contacts": null,
+      "openingHours": null
+    }
+  ],
+  "parkingLots": [
+    {
+      "title": "Hotel Adlon",
+      "id": "here:pds:place:276u33db-6bdbf254e35040f6a45e698b3ec5ee48",
+      "resultType": "place",
+      "address": {
+        "label": "Hotel Adlon, Unter den Linden 77, 10117 Berlin, Deutschland",
+        "countryCode": "DEU",
+        "countryName": "Deutschland",
+        "state": "Berlin",
+        "county": "Berlin",
+        "city": "Berlin",
+        "district": "Mitte",
+        "street": "Unter den Linden",
+        "postalCode": "10117",
+        "houseNumber": "77"
+      },
+      "position": {
+        "lat": 52.51612,
+        "lng": 13.38003
+      },
+      "access": [
+        {
+          "lat": 52.51631,
+          "lng": 13.37999
+        }
+      ],
+      "distance": 211,
+      "categories": [
+        {
+          "id": "800-8500-0177",
+          "name": "Parkhaus",
+          "primary": true
+        }
+      ],
+      "references": [
+        {
+          "supplier": {
+            "id": "core"
+          },
+          "id": "1175946973"
+        }
+      ],
+      "foodTypes": null,
+      "contacts": [
+        {
+          "phone": [
+            {
+              "value": "+4971130570305"
+            }
+          ],
+          "www": [
+            {
+              "value": "http://www.apcoa.de"
+            }
+          ]
+        }
+      ],
+      "openingHours": [
+        {
+          "text": [
+            "Mon-Sun: 00:00 - 24:00"
+          ],
+          "isOpen": true,
+          "structured": [
+            {
+              "start": "T000000",
+              "duration": "PT24H00M",
+              "recurrence": "FREQ:DAILY;BYDAY:MO,TU,WE,TH,FR,SA,SU"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Behrenstraße 72",
+      "id": "here:pds:place:276bma4v-55d4be0b3f530fe9cb3ea6a545ad2d33",
+      "resultType": "place",
+      "address": {
+        "label": "Behrenstraße 72, Behrenstraße 72, 10117 Berlin, Deutschland",
+        "countryCode": "DEU",
+        "countryName": "Deutschland",
+        "state": "Berlin",
+        "county": "Berlin",
+        "city": "Berlin",
+        "district": "Mitte",
+        "street": "Behrenstraße",
+        "postalCode": "10117",
+        "houseNumber": "72"
+      },
+      "position": {
+        "lat": 52.51494,
+        "lng": 13.37952
+      },
+      "access": [
+        {
+          "lat": 52.51478,
+          "lng": 13.3796
+        }
+      ],
+      "distance": 215,
+      "categories": [
+        {
+          "id": "800-8500-0178",
+          "name": "Parkplatz",
+          "primary": true
+        },
+        {
+          "id": "800-8500-0000",
+          "name": "Parkplatz",
+          "primary": false
+        }
+      ],
+      "references": null,
+      "foodTypes": null,
+      "contacts": [
+        {
+          "phone": [
+            {
+              "value": "+491759300106"
+            }
+          ],
+          "www": [
+            {
+              "value": "http://www.bvg.de/"
+            },
+            {
+              "value": "https://www.parkopedia.de/parken/parkplatz/behrenstra%C3%9Fe_72/10117/berlin/?vendor=here"
+            }
+          ]
+        }
+      ],
+      "openingHours": [
+        {
+          "text": [
+            "Mon-Sun: 10:00 - 18:00"
+          ],
+          "isOpen": true,
+          "structured": [
+            {
+              "start": "T100000",
+              "duration": "PT08H00M",
+              "recurrence": "FREQ:DAILY;BYDAY:MO,TU,WE,TH,FR,SA,SU"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Ebertstraße/Marriott",
+      "id": "here:pds:place:276jx7ps-9910e50f804908ea1ade4c71af22a7ba",
+      "resultType": "place",
+      "address": {
+        "label": "Ebertstraße/Marriott, Ebertstraße, 10117 Berlin, Deutschland",
+        "countryCode": "DEU",
+        "countryName": "Deutschland",
+        "state": "Berlin",
+        "county": "Berlin",
+        "city": "Berlin",
+        "district": "Mitte",
+        "street": "Ebertstraße",
+        "postalCode": "10117",
+        "houseNumber": ""
+      },
+      "position": {
+        "lat": 52.51162,
+        "lng": 13.37669
+      },
+      "access": [
+        {
+          "lat": 52.51149,
+          "lng": 13.37687
+        }
+      ],
+      "distance": 492,
+      "categories": [
+        {
+          "id": "800-8500-0177",
+          "name": "Parkhaus",
+          "primary": true
+        }
+      ],
+      "references": [
+        {
+          "supplier": {
+            "id": "core"
+          },
+          "id": "1148385899"
+        }
+      ],
+      "foodTypes": null,
+      "contacts": null,
+      "openingHours": null
+    }
+  ]
+}

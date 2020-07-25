@@ -61,7 +61,7 @@ func GetLocationCoordinates(locationName string) (models.LocationCoordinate, err
 	return hereGeoCodeRes.Items[0].Position, nil
 }
 
-//GetPlacesAroundGivenLocaton ... gives places near by to a location
+//GetPOINearALocation ... gives places near by to a location
 //which includes restaurent, charging station, parking lot
 func GetPOINearALocation(locationCoordinates models.LocationCoordinate) (*models.Places, error) {
 
@@ -130,6 +130,6 @@ func getNearByPlaceForACategory(poi poiMetaData) {
 	poi.dataChannel <- models.PlaceInfoItems{
 		POIName: poi.categoryName,
 		Items:   placeInfoItems.Items,
-		Err:     err,
+		Err:     nil,
 	}
 }
