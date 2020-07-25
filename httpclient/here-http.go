@@ -9,13 +9,12 @@ import (
 )
 
 const (
-	hereAPIKey          = "uZ9InITCNxhCIlW--t1RDnYlSplGAMkktR2UP1D_wok"
-	hereBrowseAPIURL    = "https://browse.search.hereapi.com/v1/browse?at=%s3&limit=3&categories=%s&apiKey=%s"
-	hereGecodeAPIURL    = "https://geocode.search.hereapi.com/v1/geocode?q=%s&apiKey=%s"
-	hereRestaurentCatID = "100-1000"
-	restaurent          = "restaurent"
-	evChargingStation   = "evChargingStation"
-	parking             = "parking"
+	hereAPIKey        = "uZ9InITCNxhCIlW--t1RDnYlSplGAMkktR2UP1D_wok"
+	hereBrowseAPIURL  = "https://browse.search.hereapi.com/v1/browse?at=%s3&limit=3&categories=%s&apiKey=%s"
+	hereGecodeAPIURL  = "https://geocode.search.hereapi.com/v1/geocode?q=%s&apiKey=%s"
+	restaurent        = "restaurent"
+	evChargingStation = "evChargingStation"
+	parking           = "parking"
 )
 
 type poiMetaData struct {
