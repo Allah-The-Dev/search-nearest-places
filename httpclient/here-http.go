@@ -116,16 +116,16 @@ func getNearByPlaceForACategory(poi poiMetaData) {
 
 	responseBody, err := doHTTPGet(url)
 	if err != nil {
+		fieldName := err.Error()
+		msg := fmt.Errorf("unable to get %s ; %s", poi.categoryName, fieldName)
 		poi.dataChannel <- models.PlaceInfoItems{
 			POIName: poi.categoryName,
 			Items:   []models.PlaceInfo{},
-			Err:     err,
+			Err:     msg,
 		}
 	}
 	defer responseBody.Close()
 	json.NewDecoder(responseBody).Decode(&placeInfoItems)
-
-	fmt.Println("restaurent is ", placeInfoItems)
 
 	poi.dataChannel <- models.PlaceInfoItems{
 		POIName: poi.categoryName,

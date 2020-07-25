@@ -4,8 +4,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"search-nearest-places/cache"
 	"search-nearest-places/httpclient"
+	"search-nearest-places/models"
 )
+
+var poiDataCache *cache.LRUCache
+
+func init() {
+	//initialize cache
+	poiDataCache = cache.New(20)
+}
 
 //PlacesHandler ... returns places from here API
 func PlacesHandler(w http.ResponseWriter, r *http.Request) {
@@ -14,6 +23,12 @@ func PlacesHandler(w http.ResponseWriter, r *http.Request) {
 
 	location := query.Get("location")
 	fmt.Println("location name is ", location)
+
+	if isAvailableInCache, poiData := checkPOIDataInCache(location); isAvailableInCache {
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(poiData)
+		return
+	}
 
 	locationCoordinates, err := httpclient.GetLocationCoordinates(location)
 	if err != nil {
@@ -31,8 +46,17 @@ func PlacesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Printf("%v", places)
+	//update the cache
+	poiDataCache.Put(location, *places)
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(*places)
+}
+
+func checkPOIDataInCache(location string) (bool, *models.Places) {
+	poiData := poiDataCache.Get(location)
+	if poiData != nil {
+		return true, poiData
+	}
+	return false, nil
 }
