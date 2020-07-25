@@ -23,7 +23,7 @@ func PlacesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	places, err := httpclient.GetPlacesAroundGivenLocaton(locationCoordinates)
+	places, err := httpclient.GetPOINearALocation(locationCoordinates)
 	if err != nil {
 		fieldName := err.Error()
 		msg := fmt.Sprintf("unable to get places %s", fieldName)

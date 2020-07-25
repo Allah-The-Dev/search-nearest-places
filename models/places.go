@@ -2,12 +2,16 @@ package models
 
 //Places ... represent place info nearby
 type Places struct {
-	Restaurent []PlaceInfo `json:"restaurent"`
+	Restaurents        []PlaceInfo `json:"restaurents"`
+	EvChargingStations []PlaceInfo `json:"evChargingStations"`
+	ParkingLots        []PlaceInfo `json:"parkingLots"`
 }
 
 //PlaceInfoItems ... items from here API
 type PlaceInfoItems struct {
-	Items []PlaceInfo `json:"items"`
+	POIName string
+	Items   []PlaceInfo `json:"items"`
+	Err     error
 }
 
 //PlaceInfo ... higher level restaurent info
