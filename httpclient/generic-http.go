@@ -7,8 +7,9 @@ import (
 	"time"
 )
 
-func doHTTPGet(url string) (*io.ReadCloser, error) {
+func doHTTPGet(url string) (io.ReadCloser, error) {
 
+	fmt.Println("url is ::::", url)
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
 		Timeout: timeout,
@@ -28,5 +29,5 @@ func doHTTPGet(url string) (*io.ReadCloser, error) {
 		return nil, fmt.Errorf("here geocode api returned status code %s", response.Status)
 	}
 
-	return &response.Body, nil
+	return response.Body, nil
 }

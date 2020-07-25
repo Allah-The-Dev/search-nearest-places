@@ -1,5 +1,10 @@
 package models
 
+//RestaurentItems ... items from here API
+type RestaurentItems struct {
+	Items []Restaurent `json:"items"`
+}
+
 //Restaurent ... higher level restaurent info
 type Restaurent struct {
 	Title      string       `json:"title"`

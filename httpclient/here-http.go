@@ -14,79 +14,62 @@ const (
 	hereRestaurentCatID = "100-1000"
 )
 
-//LocationCoordinate ... coordinates of a location
-type LocationCoordinate struct {
-	lat float64
-	lng float64
-}
-
-type hereGeoCodeItem struct {
-	position LocationCoordinate
-}
-
-type hereGeoCodeResponse struct {
-	items []hereGeoCodeItem
-}
-
-//Places ... represent place info nearby
-type Places struct {
-	Restaurent models.Restaurent `json:"restaurent"`
-}
-
-type location struct {
-	name string
-	long float64
-	lat  float64
-}
-
 //GetLocationCoordinates ... gives location coordinate,
 // when location name is given
-func GetLocationCoordinates(locationName string) (*LocationCoordinate, error) {
+func GetLocationCoordinates(locationName string) (models.LocationCoordinate, error) {
+
+	locationCoordinate := models.LocationCoordinate{}
+
 	url := fmt.Sprintf(hereGecodeAPIURL, locationName, hereAPIKey)
+
 	responseBody, err := doHTTPGet(url)
 	if err != nil {
-		return nil, err
+		return locationCoordinate, err
 	}
-	var hereGeoCodeRes hereGeoCodeResponse
-	json.NewDecoder(*responseBody).Decode(&hereGeoCodeRes)
+	defer responseBody.Close()
 
-	coordinates := &LocationCoordinate{
-		lat: hereGeoCodeRes.items[0].position.lat,
-		lng: hereGeoCodeRes.items[0].position.lng,
+	var hereGeoCodeRes models.HereGeoCodeResponse
+	err = json.NewDecoder(responseBody).Decode(&hereGeoCodeRes)
+	if err != nil {
+		return locationCoordinate, err
 	}
 
-	return coordinates, nil
+	fmt.Println("here geo code response", hereGeoCodeRes)
+
+	return hereGeoCodeRes.Items[0].Position, nil
 }
 
 //GetPlacesAroundGivenLocaton ... gives places near by to a location
 //which includes restaurent, charging station, parking lot
-func GetPlacesAroundGivenLocaton(coordinates *LocationCoordinate) (*Places, error) {
+func GetPlacesAroundGivenLocaton(coordinates models.LocationCoordinate) (*models.Places, error) {
 
-	var placesAround *Places
+	placesAround := &models.Places{}
 	var err error
 
 	placesAround.Restaurent, err = getNearByRestaurents(coordinates, hereRestaurentCatID)
 	if err != nil {
+		fmt.Println("i'm here", err)
 		return nil, err
 	}
 	return placesAround, nil
 }
 
-func getNearByRestaurents(coordinates *LocationCoordinate, categoryID string) (models.Restaurent, error) {
+func getNearByRestaurents(coordinates models.LocationCoordinate, categoryID string) ([]models.Restaurent, error) {
 
-	restaurent := models.Restaurent{}
+	restaurentItems := models.RestaurentItems{}
 
-	coordinatesStr := fmt.Sprintf("%f,%f", coordinates.lat, coordinates.lng)
+	coordinatesStr := fmt.Sprintf("%f,%f", coordinates.Lat, coordinates.Lng)
 
 	url := fmt.Sprintf(hereBrowseAPIURL, coordinatesStr, categoryID, hereAPIKey)
 
 	responseBody, err := doHTTPGet(url)
 	if err != nil {
-		return restaurent, err
+		return []models.Restaurent{}, err
 	}
+	defer responseBody.Close()
+	json.NewDecoder(responseBody).Decode(&restaurentItems)
 
-	json.NewDecoder(*responseBody).Decode(&restaurent)
-
-	return restaurent, nil
+	fmt.Println("restaurent is ", restaurentItems)
+	return restaurentItems.Items, nil
 
 }
