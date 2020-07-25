@@ -34,9 +34,13 @@ func PlacesHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("url encoded location is %s", urlEncodedLocation)
 
 	if ok, poiData := checkPOIDataInCache(location); ok {
+
 		log.Printf("data found in cache for %s", location)
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(poiData)
+
+		log.Printf("update data in cache again, as it is the latest accessed node")
+		poiDataCache.Put(location, *poiData)
 		return
 	}
 
