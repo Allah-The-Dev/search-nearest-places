@@ -27,7 +27,7 @@ func doHTTPGet(url string) (io.ReadCloser, error) {
 	}
 
 	if response.StatusCode != 200 {
-		return nil, fmt.Errorf("here geocode api returned status code %s", response.Status)
+		return nil, fmt.Errorf("here api returned status code %s", response.Status)
 	}
 	log.Println("get method success")
 	return response.Body, nil

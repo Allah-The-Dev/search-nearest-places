@@ -89,7 +89,7 @@ func GetPOINearALocation(locationCoordinates models.LocationCoordinate) (*models
 
 	for poiData := range poiDataChannel {
 		if poiData.Err != nil {
-			return placesAround, nil
+			return nil, poiData.Err
 		}
 		switch poiData.POIName {
 		case restaurent:
@@ -122,6 +122,7 @@ func getNearByPlaceForACategory(poi poiMetaData) {
 			Items:   []models.PlaceInfo{},
 			Err:     msg,
 		}
+		return
 	}
 	defer responseBody.Close()
 	json.NewDecoder(responseBody).Decode(&placeInfoItems)
