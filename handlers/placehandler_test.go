@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
 	"search-nearest-places/models"
 	"testing"
 )
@@ -126,6 +127,68 @@ func TestPlacesHandler(t *testing.T) {
 			if status := rr.Code; status != http.StatusOK {
 				t.Errorf("handler returned wrong status code: got %v want %v",
 					status, http.StatusOK)
+			}
+		})
+	}
+}
+
+func Test_getPOIFromHereAPI(t *testing.T) {
+
+	tests := []struct {
+		name                     string
+		locationName             string
+		getLocCoordiantesFunc    func(string) (models.Position, error)
+		getPOIsNearALocationFunc func(models.Position) (*models.Places, error)
+		want                     *models.Places
+		wantErr                  bool
+	}{
+		{
+			name:         "should return error, when getLocCoordinateFunc returns error",
+			locationName: "London",
+			getLocCoordiantesFunc: func(string) (models.Position, error) {
+				return models.Position{}, errors.New("unable to get coordinates")
+			},
+			want:    nil,
+			wantErr: true,
+		},
+		{
+			name:         "should return error, when getPOIsNearALocationFunc returns error",
+			locationName: "London",
+			getLocCoordiantesFunc: func(string) (models.Position, error) {
+				return models.Position{}, nil
+			},
+			getPOIsNearALocationFunc: func(models.Position) (*models.Places, error) {
+				return nil, errors.New("unable to get coordinates")
+			},
+			want:    nil,
+			wantErr: true,
+		},
+		{
+			name:         "should return places, when http client package returns proper response",
+			locationName: "London",
+			getLocCoordiantesFunc: func(string) (models.Position, error) {
+				return models.Position{}, nil
+			},
+			getPOIsNearALocationFunc: func(models.Position) (*models.Places, error) {
+				return &models.Places{}, nil
+			},
+			want:    &models.Places{},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+
+			getLocCoordiantesFunc = tt.getLocCoordiantesFunc
+			getPOIsNearALocationFunc = tt.getPOIsNearALocationFunc
+
+			got, err := getPOIFromHereAPI(tt.locationName)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("getPOIFromHereAPI() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("getPOIFromHereAPI() = %v, want %v", got, tt.want)
 			}
 		})
 	}
