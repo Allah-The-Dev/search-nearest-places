@@ -17,6 +17,7 @@ var (
 	getPOIFromHereAPIFunc     = getPOIFromHereAPI
 	getLocCoordiantesFunc     = httpclient.GetLocationCoordinates
 	getPOIsNearALocationFunc  = httpclient.GetPOIsNearALocation
+	getPOIDataFromCacheFunc   = getPOIDataFromCache
 )
 
 func init() {
@@ -44,7 +45,7 @@ func PlacesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Printf("url encoded location is %s", urlEncodedLocationName)
 
-	if ok, poiData := checkPOIDataInCache(locationName); ok {
+	if ok, poiData := getPOIDataFromCacheFunc(locationName); ok {
 
 		log.Printf("data found in cache for %s", locationName)
 		w.WriteHeader(http.StatusOK)
@@ -68,7 +69,7 @@ func PlacesHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(*poiPlaces)
 }
 
-func checkPOIDataInCache(locationName string) (bool, *models.Places) {
+func getPOIDataFromCache(locationName string) (bool, *models.Places) {
 	poiData := poiDataCache.Get(locationName)
 	if poiData != nil {
 		return true, poiData

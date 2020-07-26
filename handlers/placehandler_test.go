@@ -91,7 +91,7 @@ func TestPlacesHandler_InernalServerError(t *testing.T) {
 	}
 }
 
-func TestPlacesHandler(t *testing.T) {
+func TestPlacesHandler_Sucess(t *testing.T) {
 
 	tests := []struct {
 		name                  string
@@ -127,6 +127,57 @@ func TestPlacesHandler(t *testing.T) {
 			if status := rr.Code; status != http.StatusOK {
 				t.Errorf("handler returned wrong status code: got %v want %v",
 					status, http.StatusOK)
+			}
+		})
+	}
+}
+
+func TestPlacesHandler_CachedData(t *testing.T) {
+
+	tests := []struct {
+		name                    string
+		url                     string
+		wantStatusCode          int
+		getPOIDataFromCacheFunc func(string) (bool, *models.Places)
+		getPOIFromHereAPIFunc   func(string) (*models.Places, error)
+		wantPOIData             string
+	}{
+		{
+			name:           "should return status ok, when request is correct",
+			url:            "/api/v1/places?location=London",
+			wantStatusCode: 200,
+			getPOIDataFromCacheFunc: func(string) (bool, *models.Places) {
+				return true, &models.Places{ParkingLots: []models.PlaceInfo{{Title: "title1"}}}
+			},
+			getPOIFromHereAPIFunc: func(string) (*models.Places, error) {
+				return &models.Places{Restaurents: []models.PlaceInfo{{Title: "title1"}}}, nil
+			},
+			wantPOIData: `["parkingLots": [{"title":"title1"}]]`,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+
+			getPOIFromHereAPIFunc = tt.getPOIFromHereAPIFunc
+
+			req, err := http.NewRequest("GET", tt.url, nil)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			rr := httptest.NewRecorder()
+			handler := http.HandlerFunc(PlacesHandler)
+
+			handler.ServeHTTP(rr, req)
+
+			// Check the status code is what we expect.
+			if status := rr.Code; status != http.StatusOK {
+				t.Errorf("handler returned wrong status code: got %v want %v",
+					status, http.StatusOK)
+			}
+
+			if reflect.DeepEqual(rr.Body.String(), tt.wantPOIData) {
+				t.Errorf("place POI data: got %v want %v", rr.Body.String(), tt.wantPOIData)
 			}
 		})
 	}
