@@ -10,5 +10,7 @@ GET http://localhost:9080/api/v1/places?location=Berlin
 
 steps to follow
 1.docker pull allahthedev/search-nearby-places:1.1
+
 2.docker run -it -d -p 9080:9080 -i allahthedev/search-nearby-places:1.1
+
 3.hit url : GET http://localhost:9080/api/v1/places?location=London
