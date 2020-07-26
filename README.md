@@ -15,3 +15,15 @@ steps to follow
 2. docker run -it -d -p 9080:9080 -i allahthedev/search-nearby-places:1.1
 
 3. hit url : GET http://localhost:9080/api/v1/places?location=London
+
+# Key information of project
+
+1. It have 88.4% of unit test coverage
+
+2. It uses LRU cache
+
+3. Docker image size is highly optimized with size of 13.8 MB, 
+
+4. Docker file is a multistage file
+
+5. Unit test is written using table driven test cases in Golang
