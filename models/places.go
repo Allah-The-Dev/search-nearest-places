@@ -44,12 +44,6 @@ type Address struct {
 	HouseNumber string `json:"houseNumber,omitempty"`
 }
 
-//Position ... position of restaurent
-type Position struct {
-	Lat float64 `json:"lat,omitempty"`
-	Lng float64 `json:"lng,omitempty"`
-}
-
 //Access ... access coordinates of restaurent
 type Access struct {
 	Lat float64 `json:"lat,omitempty"`

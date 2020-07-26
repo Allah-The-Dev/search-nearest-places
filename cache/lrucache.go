@@ -6,7 +6,7 @@ import (
 	"search-nearest-places/models"
 )
 
-//Cache ... cache type
+//Cache ... generic cache type
 type Cache interface {
 	Get(string) *models.Places
 	Put(string, models.Places)
@@ -21,11 +21,11 @@ type LRUCache struct {
 
 //PlaceInfoCache ... store places data mapped to location name
 type PlaceInfoCache struct {
-	Location string
-	POIData  models.Places
+	LocationName string
+	POIData      models.Places
 }
 
-//New ... method to create a new cache
+//New ... method to create a LRU new cache
 func New(cap int) *LRUCache {
 	return &LRUCache{
 		capacity:   cap,
@@ -49,18 +49,18 @@ func (cache *LRUCache) Get(location string) *models.Places {
 
 //Put ... put item in list and map to a hashmap if not exist
 //if exist move it to front
-func (cache *LRUCache) Put(location string, newPOIPlaces models.Places) {
+func (cache *LRUCache) Put(locationName string, newPOIPlaces models.Places) {
 
-	if node, ok := cache.elementMap[location]; ok {
+	if node, ok := cache.elementMap[locationName]; ok {
 
-		node.Value.(*list.Element).Value = PlaceInfoCache{location, newPOIPlaces}
+		node.Value.(*list.Element).Value = PlaceInfoCache{locationName, newPOIPlaces}
 
 		cache.list.MoveToFront(node)
 	} else {
 
 		if cache.list.Len() == cache.capacity {
 
-			lastLocationInCache := cache.list.Back().Value.(*list.Element).Value.(PlaceInfoCache).Location
+			lastLocationInCache := cache.list.Back().Value.(*list.Element).Value.(PlaceInfoCache).LocationName
 
 			delete(cache.elementMap, lastLocationInCache)
 
@@ -69,13 +69,13 @@ func (cache *LRUCache) Put(location string, newPOIPlaces models.Places) {
 
 		newNode := &list.Element{
 			Value: PlaceInfoCache{
-				Location: location,
-				POIData:  newPOIPlaces,
+				LocationName: locationName,
+				POIData:      newPOIPlaces,
 			},
 		}
 
 		nodePtr := cache.list.PushFront(newNode)
 
-		cache.elementMap[location] = nodePtr
+		cache.elementMap[locationName] = nodePtr
 	}
 }

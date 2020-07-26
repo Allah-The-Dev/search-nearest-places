@@ -21,7 +21,7 @@ const (
 type poiMetaData struct {
 	categoryID   string
 	categoryName string
-	coordinates  models.LocationCoordinate
+	coordinates  models.Position
 	dataChannel  chan models.PlaceInfoItems
 	waitGroup    *sync.WaitGroup
 }
@@ -38,9 +38,9 @@ func init() {
 
 //GetLocationCoordinates ... gives location coordinate,
 // when location name is given
-func GetLocationCoordinates(locationName string) (models.LocationCoordinate, error) {
+func GetLocationCoordinates(locationName string) (models.Position, error) {
 
-	locationCoordinate := models.LocationCoordinate{}
+	locationCoordinate := models.Position{}
 
 	url := fmt.Sprintf(hereGecodeAPIURL, locationName, hereAPIKey)
 
@@ -61,9 +61,9 @@ func GetLocationCoordinates(locationName string) (models.LocationCoordinate, err
 	return hereGeoCodeRes.Items[0].Position, nil
 }
 
-//GetPOINearALocation ... gives places near by to a location
+//GetPOIsNearALocation ... gives places near by to a location
 //which includes restaurent, charging station, parking lot
-func GetPOINearALocation(locationCoordinates models.LocationCoordinate) (*models.Places, error) {
+func GetPOIsNearALocation(poiPosition models.Position) (*models.Places, error) {
 
 	placesAround := &models.Places{}
 
@@ -76,7 +76,7 @@ func GetPOINearALocation(locationCoordinates models.LocationCoordinate) (*models
 		poiMetaData := poiMetaData{
 			categoryID:   poiCategoryID,
 			categoryName: poiCategoryName,
-			coordinates:  locationCoordinates,
+			coordinates:  poiPosition,
 			dataChannel:  poiDataChannel,
 			waitGroup:    &wg,
 		}
