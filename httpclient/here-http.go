@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 	"sync"
+	"time"
 
 	"search-nearest-places/models"
 )
@@ -21,6 +23,7 @@ var (
 	hereGecodeAPIURL               string
 	categoriesOfPOI                map[string]string
 	getNearByPlaceForACategoryFunc = getNearByPlaceForACategory
+	httpClient                     *http.Client
 )
 
 type poiMetaData struct {
@@ -40,6 +43,10 @@ func init() {
 	hereAPIKey = "uZ9InITCNxhCIlW--t1RDnYlSplGAMkktR2UP1D_wok"
 	hereBrowseAPIURL = "https://browse.search.hereapi.com/v1/browse?at=%s3&limit=3&categories=%s&apiKey=%s"
 	hereGecodeAPIURL = "https://geocode.search.hereapi.com/v1/geocode?q=%s&apiKey=%s"
+	timeout := time.Duration(5 * time.Second)
+	httpClient = &http.Client{
+		Timeout: timeout,
+	}
 }
 
 //GetLocationCoordinates ... gives location coordinate,

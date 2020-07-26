@@ -5,16 +5,12 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"time"
 )
 
 func doHTTPGet(url string) (io.ReadCloser, error) {
 
 	log.Printf("get request for : %s", url)
-	timeout := time.Duration(5 * time.Second)
-	client := http.Client{
-		Timeout: timeout,
-	}
+	client := httpClient
 
 	request, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
