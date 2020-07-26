@@ -18,12 +18,16 @@ steps to follow
 
 # Key information of project
 
-1. It have 88.4% of unit test coverage
+1. Here API calls are made parallel using goroutine and sync package
 
-2. It uses LRU cache
+2. Unit test is written using table driven test cases in Golang
 
-3. Docker image size is highly optimized with size of 13.8 MB, 
+3. It have 88.4% of unit test coverage
 
-4. Docker file is a multistage file
+4. It uses LRU cache
 
-5. Unit test is written using table driven test cases in Golang
+5. Docker image size is highly optimized with size of 13.8 MB, 
+
+6. Docker file is a multistage file
+
+
