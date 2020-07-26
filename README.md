@@ -9,9 +9,6 @@ GET http://localhost:9080/api/v1/places?location=Berlin
 # use docker image
 
 steps to follow
-1. pull image
-  docker pull allahthedev/search-nearby-places:1.1
-2. run container
-  docker run -it -d -p 9080:9080 -i allahthedev/search-nearby-places:1.1
-3. to test HTTP API
-  hit url : GET http://localhost:9080/api/v1/places?location=London
+1.docker pull allahthedev/search-nearby-places:1.1
+2.docker run -it -d -p 9080:9080 -i allahthedev/search-nearby-places:1.1
+3.hit url : GET http://localhost:9080/api/v1/places?location=London
