@@ -10,12 +10,17 @@ import (
 )
 
 const (
-	hereAPIKey        = "uZ9InITCNxhCIlW--t1RDnYlSplGAMkktR2UP1D_wok"
-	hereBrowseAPIURL  = "https://browse.search.hereapi.com/v1/browse?at=%s3&limit=3&categories=%s&apiKey=%s"
-	hereGecodeAPIURL  = "https://geocode.search.hereapi.com/v1/geocode?q=%s&apiKey=%s"
 	restaurent        = "restaurent"
 	evChargingStation = "evChargingStation"
 	parking           = "parking"
+)
+
+var (
+	hereAPIKey                     string
+	hereBrowseAPIURL               string
+	hereGecodeAPIURL               string
+	categoriesOfPOI                map[string]string
+	getNearByPlaceForACategoryFunc = getNearByPlaceForACategory
 )
 
 type poiMetaData struct {
@@ -26,14 +31,15 @@ type poiMetaData struct {
 	waitGroup    *sync.WaitGroup
 }
 
-var categoriesOfPOI map[string]string
-
 func init() {
 	categoriesOfPOI = map[string]string{
 		restaurent:        "100-1000",
 		evChargingStation: "700-7600-0322",
 		parking:           "800-8500",
 	}
+	hereAPIKey = "uZ9InITCNxhCIlW--t1RDnYlSplGAMkktR2UP1D_wok"
+	hereBrowseAPIURL = "https://browse.search.hereapi.com/v1/browse?at=%s3&limit=3&categories=%s&apiKey=%s"
+	hereGecodeAPIURL = "https://geocode.search.hereapi.com/v1/geocode?q=%s&apiKey=%s"
 }
 
 //GetLocationCoordinates ... gives location coordinate,
@@ -46,6 +52,7 @@ func GetLocationCoordinates(locationName string) (models.Position, error) {
 
 	responseBody, err := doHTTPGet(url)
 	if err != nil {
+		log.Println(err)
 		return locationCoordinate, err
 	}
 	defer responseBody.Close()
@@ -80,7 +87,7 @@ func GetPOIsNearALocation(poiPosition models.Position) (*models.Places, error) {
 			dataChannel:  poiDataChannel,
 			waitGroup:    &wg,
 		}
-		go getNearByPlaceForACategory(poiMetaData)
+		go getNearByPlaceForACategoryFunc(poiMetaData)
 	}
 
 	go func() {
