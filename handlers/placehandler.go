@@ -91,9 +91,7 @@ func getPOIFromHereAPI(locationName string) (*models.Places, error) {
 	log.Printf("data not found in cache, getting from here API for location %s", locationName)
 	poiPosition, err := getLocCoordiantesFunc(locationName)
 	if err != nil {
-		fieldName := err.Error()
-		errFmt := fmt.Errorf("unable to get location coordinate..!! %s", fieldName)
-		return nil, errFmt
+		return nil, err
 	}
 
 	places, err := getPOIsNearALocationFunc(poiPosition)

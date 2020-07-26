@@ -2,6 +2,7 @@ package httpclient
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -24,6 +25,7 @@ var (
 	categoriesOfPOI                map[string]string
 	getNearByPlaceForACategoryFunc = getNearByPlaceForACategory
 	httpClient                     *http.Client
+	errCoordinateNotFound          = errors.New("unable to find cooridate for location")
 )
 
 type poiMetaData struct {
@@ -71,6 +73,9 @@ func GetLocationCoordinates(locationName string) (models.Position, error) {
 	}
 
 	log.Println("here geo code response received")
+	if len(hereGeoCodeRes.Items) == 0 {
+		return locationCoordinate, errCoordinateNotFound
+	}
 
 	return hereGeoCodeRes.Items[0].Position, nil
 }
