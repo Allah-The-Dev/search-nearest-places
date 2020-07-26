@@ -14,6 +14,7 @@ import (
 var (
 	poiDataCache              cache.Cache
 	locationNameNotInQueryErr = "location name is not present in query"
+	getPOIFromHereAPIFunc     = getPOIFromHereAPI
 )
 
 func init() {
@@ -52,13 +53,12 @@ func PlacesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	poiPlaces, err := getPOIFromHereAPI(urlEncodedLocationName)
+	poiPlaces, err := getPOIFromHereAPIFunc(urlEncodedLocationName)
 	if err != nil {
 		log.Printf("error:: %v", err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
 	//update the cache
 	poiDataCache.Put(locationName, *poiPlaces)
 
