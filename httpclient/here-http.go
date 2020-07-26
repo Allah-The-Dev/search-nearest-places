@@ -25,7 +25,7 @@ var (
 	categoriesOfPOI                map[string]string
 	getNearByPlaceForACategoryFunc = getNearByPlaceForACategory
 	httpClient                     *http.Client
-	errCoordinateNotFound          = errors.New("unable to find cooridate for location")
+	errCoordinateNotFound          = errors.New("unable to find cooridnate for location")
 )
 
 type poiMetaData struct {
