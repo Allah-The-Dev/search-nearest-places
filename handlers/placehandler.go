@@ -11,7 +11,7 @@ import (
 	"search-nearest-places/models"
 )
 
-var poiDataCache *cache.LRUCache
+var poiDataCache cache.Cache
 
 func init() {
 	//initialize cache

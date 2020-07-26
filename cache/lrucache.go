@@ -6,6 +6,12 @@ import (
 	"search-nearest-places/models"
 )
 
+//Cache ... cache type
+type Cache interface {
+	Get(string) *models.Places
+	Put(string, models.Places)
+}
+
 //LRUCache ...  using golang container/list - a doubly linked list package
 type LRUCache struct {
 	capacity   int
