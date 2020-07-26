@@ -15,6 +15,8 @@ var (
 	poiDataCache              cache.Cache
 	locationNameNotInQueryErr = "location name is not present in query"
 	getPOIFromHereAPIFunc     = getPOIFromHereAPI
+	getLocCoordiantesFunc     = httpclient.GetLocationCoordinates
+	getPOIsNearALocationFunc  = httpclient.GetPOIsNearALocation
 )
 
 func init() {
@@ -86,14 +88,14 @@ func getURLEncodedLocation(locationName string) (string, error) {
 
 func getPOIFromHereAPI(locationName string) (*models.Places, error) {
 	log.Printf("data not found in cache, getting from here API for location %s", locationName)
-	poiPosition, err := httpclient.GetLocationCoordinates(locationName)
+	poiPosition, err := getLocCoordiantesFunc(locationName)
 	if err != nil {
 		fieldName := err.Error()
 		errFmt := fmt.Errorf("unable to get location coordinate..!! %s", fieldName)
 		return nil, errFmt
 	}
 
-	places, err := httpclient.GetPOIsNearALocation(poiPosition)
+	places, err := getPOIsNearALocationFunc(poiPosition)
 	if err != nil {
 		fieldName := err.Error()
 		errFmt := fmt.Errorf("unable to get places ...!! %s", fieldName)
