@@ -11,7 +11,10 @@ import (
 	"search-nearest-places/models"
 )
 
-var poiDataCache cache.Cache
+var (
+	poiDataCache              cache.Cache
+	locationNameNotInQueryErr = "location name is not present in query"
+)
 
 func init() {
 	//initialize cache
@@ -24,12 +27,17 @@ func PlacesHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	locationName := query.Get("location")
+	if len(locationName) == 0 {
+		http.Error(w, locationNameNotInQueryErr, http.StatusBadRequest)
+		return
+	}
 	log.Printf("location name is %s", locationName)
 
 	urlEncodedLocationName, err := getURLEncodedLocation(locationName)
 	if err != nil {
 		log.Printf("error:: %v", err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 	log.Printf("url encoded location is %s", urlEncodedLocationName)
 
