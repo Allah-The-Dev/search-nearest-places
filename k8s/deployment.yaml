@@ -16,22 +16,6 @@ spec:
         - name: search-nearby-places
           image: allahthedev.azurecr.io/search-nearby-places:1.0
           imagePullPolicy: Always
-          readinessProbe:
-            httpGet:
-              port: 8080
-              path: /
-            initialDelaySeconds: 120
-            periodSeconds: 5
-            timeoutSeconds: 5
-            failureThreshold: 10
-          livenessProbe:
-            httpGet:
-              port: 8080
-              path: /
-            initialDelaySeconds: 120
-            periodSeconds: 5
-            timeoutSeconds: 5
-            failureThreshold: 10
           resources:
             requests:
               memory: "128Mi"
