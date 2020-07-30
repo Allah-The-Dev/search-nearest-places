@@ -14,7 +14,7 @@ import (
 
 // Tweak configuration values here.
 const (
-	httpServerPort    = ":9080"
+	httpServerPort    = ":8080"
 	readHeaderTimeout = 1 * time.Second
 	writeTimeout      = 10 * time.Second
 	idleTimeout       = 90 * time.Second
