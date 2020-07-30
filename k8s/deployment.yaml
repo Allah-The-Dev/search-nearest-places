@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: search-nearby-places
+spec:
+  selector:
+      matchLabels:
+        app: search-nearby-places
+  replicas: 2
+  template:
+      metadata:
+        labels:
+            app: search-nearby-places
+      spec:
+        containers:
+        - name: search-nearby-places
+          image: allahthedev.azurecr.io/search-nearby-places:1.0
+          imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /
+            initialDelaySeconds: 120
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /
+            initialDelaySeconds: 120
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 10
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"

@@ -8,4 +8,4 @@ FROM alpine:latest
 WORKDIR /go/src/app
 COPY --from=builder /go/src/app/app .
 CMD ["./app"]
-EXPOSE 9080
+EXPOSE 8080
