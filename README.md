@@ -1,3 +1,7 @@
+# accessible at (Azure Kubernetes Cluster)
+
+http://20.48.80.96/api/v1/places?location=Berlin
+
 # search-nearest-places
 A Go HTTP server, which exposes one endpoint /api/v1/places to get the nearest places, given location as queryParameter
 
